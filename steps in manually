@@ -6,6 +6,23 @@ textPayload=~"Event\s+\\.+JOBSTATUSCHANGED.+to FAILED"
 textPayload=~"nii"
 
 
+
+Log query
+
+resource.type="k8s_container" resource.labels.cluster_name="trsyplat"
+
+resource.labels.container_name="flink-kubernetes-operator"
+
+resource.labels.namespace_name="ecosystem-flink-.+" textPayload =
+
+"Event\s+\\.+JOBSTATUSCHANGED.+to FAILED" textPayload =~"nii"
+
+
+resource.type="flink_job"
+severity="ERROR"
+textPayload:"Job failed"
+
+
 Steps to Create the Alert
 Step 1: Create the Log-Based Metric
 Go to Logs Explorer in GCP Console.
