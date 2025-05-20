@@ -1,0 +1,42 @@
+resource.type="k8s_container"
+resource.labels.cluster_name="trsyplat"
+resource.labels.container_name="flink-kubernetes-operator"
+resource.labels.namespace_name=~"ecosystem-flink-.+"
+textPayload=~"Event\s+\\.+JOBSTATUSCHANGED.+to FAILED"
+textPayload=~"nii"
+
+
+Steps to Create the Alert
+Step 1: Create the Log-Based Metric
+Go to Logs Explorer in GCP Console.
+
+Paste in the log query above and confirm it returns the expected failure logs.
+
+Click “Create Metric” at the top.
+
+Use these settings:
+
+Name: flink_job_failures
+
+Type: Counter
+
+Label (optional): You can extract job ID or namespace for filtering later.
+
+Save the metric.
+
+Step 2: Create the Alerting Policy
+Go to Monitoring → Alerting → Create Policy.
+
+Add Condition:
+
+Target: Metric
+
+Find your metric under logging/user/flink_job_failures.
+
+Filter by label if needed (e.g., namespace).
+
+Condition: if count ≥ 1 in 5 minutes.
+
+Add Notification Channels (email, xMatters, etc.).
+
+Name the policy and save.
